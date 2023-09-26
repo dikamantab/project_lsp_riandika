@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management_riandika/pages/main_page.dart';
+import 'package:money_management_riandika/pages/login_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,8 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainPage(),
-      theme: ThemeData(primarySwatch: Colors.blueGrey, fontFamily: 'poppins'),
+      home: LoginPage(),
+      theme: ThemeData(primarySwatch: Colors.orange, fontFamily: 'poppins'),
     );
   }
 }
