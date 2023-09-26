@@ -48,10 +48,13 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
               )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Color.fromARGB(255, 252, 92, 52),
-        child: Icon(Icons.add),
+      floatingActionButton: Visibility(
+        visible: (currentIndex == 0) ? true : false,
+        child: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Color.fromARGB(255, 252, 92, 52),
+          child: Icon(Icons.add),
+        ),
       ),
       body: _children[currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
