@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -10,9 +11,49 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   bool isExpense = true;
 
-  void openDialog(){
-    
+  void openDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+              child: Center(
+                  child: Column(
+                children: [
+                  Text((isExpense) ? "Add Expense" : "Add Income",
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: (isExpense)
+                              ? Color.fromARGB(255, 252, 92, 52)
+                              : Colors.green)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), hintText: "Name"),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 252, 92, 52), // background
+                        onPrimary: Colors.white, // foreground
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        "Save",
+                        style: GoogleFonts.poppins(),
+                        selectionColor: Colors.green,
+                      ))
+                ],
+              )),
+            ),
+          );
+        });
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,7 +75,11 @@ class _CategoryPageState extends State<CategoryPage> {
                 inactiveThumbColor: Color.fromARGB(255, 240, 121, 92),
                 activeColor: Colors.grey,
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.add))
+              IconButton(
+                  onPressed: () {
+                    openDialog();
+                  },
+                  icon: Icon(Icons.add))
             ],
           ),
         ),
