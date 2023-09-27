@@ -12,8 +12,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-    // In a real app, you would validate the login credentials here.
-    // For this example, let's consider a hardcoded username and password.
     String hardcodedUsername = 'dika';
     String hardcodedPassword = '1234';
 
@@ -37,9 +35,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

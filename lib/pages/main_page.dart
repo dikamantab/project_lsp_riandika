@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:money_management_riandika/pages/home_page.dart';
 import 'package:money_management_riandika/pages/category_page.dart';
+import 'package:money_management_riandika/pages/transaction_page.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -51,12 +54,24 @@ class _MainPageState extends State<MainPage> {
       floatingActionButton: Visibility(
         visible: (currentIndex == 0) ? true : false,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+              builder: (context) => TransactionPage(),
+            ))
+                .then((value) {
+              setState(() {});
+            });
+          },
           backgroundColor: Color.fromARGB(255, 252, 92, 52),
           child: Icon(Icons.add),
         ),
       ),
-      body: _children[currentIndex],
+      body: Column(
+        children: [
+          _children[currentIndex],
+        ],
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         child: Row(
