@@ -14,8 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   void _login() {
     // In a real app, you would validate the login credentials here.
     // For this example, let's consider a hardcoded username and password.
-    String hardcodedUsername = 'user';
-    String hardcodedPassword = 'password';
+    String hardcodedUsername = 'dika';
+    String hardcodedPassword = '1234';
 
     if (_emailController.text == hardcodedUsername &&
         _passwordController.text == hardcodedPassword) {
@@ -45,10 +45,11 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              width: 150,
-              height: 150,
-              // Replace with your logo asset
-            ),
+                width: 150,
+                height: 150,
+                child: Image.network(
+                    'https://cdn2.iconfinder.com/data/icons/startup-business-management-6/512/1-512.png') // Replace with your logo asset
+                ),
             SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.all(16),
