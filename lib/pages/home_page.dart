@@ -1,200 +1,227 @@
+import 'dart:math';
+
+import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:intl/intl.dart';
+import 'package:money_management_riandika/models/database.dart';
+import 'package:money_management_riandika/models/transaction_with_category.dart';
+import 'package:money_management_riandika/pages/category_page.dart';
+import 'package:money_management_riandika/pages/transaction_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final DateTime selectedDate;
+  const HomePage({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<_SalesData> data = [
-    _SalesData('Jan', 35),
-    _SalesData('Feb', 28),
-    _SalesData('Mar', 34),
-    _SalesData('Apr', 32),
-    _SalesData('May', 40)
-  ];
+  final AppDb database = AppDb();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
+  // page controller
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[800],
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        child: Icon(
-                          Icons.download,
-                          color: Colors.green,
-                        ),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8)),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Income",
-                            style: GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 12),
+                          Row(
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Icon(
+                                    Icons.download,
+                                    color: Colors.greenAccent[400],
+                                  )),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Income',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12, color: Colors.white)),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text('Rp 3.800.000',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14, color: Colors.white)),
+                                ],
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 10,
+                          Row(
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Icon(
+                                    Icons.upload,
+                                    color: Colors.redAccent[400],
+                                  )),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Expense',
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 12, color: Colors.white)),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text('Rp 1.600.000',
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 14, color: Colors.white)),
+                                ],
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Rp. 3.000.000",
-                            style: GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 14),
-                          )
                         ],
                       )
                     ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        child: Icon(
-                          Icons.upload,
-                          color: Colors.red,
-                        ),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8)),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Expanse",
-                            style: GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 12),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Rp. 3.000.000",
-                            style: GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 14),
-                          )
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
-              width: double.infinity,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 66, 66, 66),
-                  borderRadius: BorderRadius.circular(16)),
+                  )),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              "Transactions",
-              style: GoogleFonts.poppins(
-                  fontSize: 16, fontWeight: FontWeight.bold),
+            SizedBox(
+              height: 10,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Card(
-              elevation: 16,
-              child: ListTile(
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.delete),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(Icons.edit)
-                  ],
-                ),
-                title: Text(
-                  "Rp. 50.000",
-                  style: GoogleFonts.poppins(),
-                ),
-                subtitle: Text(
-                  "Transfer Bank",
-                  style: GoogleFonts.poppins(),
-                ),
-                leading: Container(
-                  child: Icon(
-                    Icons.upload,
-                    color: Colors.red,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8)),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(
+                "Transactions",
+                style: GoogleFonts.montserrat(
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Card(
-              elevation: 16,
-              child: ListTile(
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.delete),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(Icons.edit)
-                  ],
-                ),
-                title: Text(
-                  "Rp. 1.000.000",
-                  style: GoogleFonts.poppins(),
-                ),
-                subtitle: Text(
-                  "Setor Tunai",
-                  style: GoogleFonts.poppins(),
-                ),
-                leading: Container(
-                  child: Icon(
-                    Icons.download,
-                    color: Colors.green,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
-            ),
-          )
-        ],
-      )),
+            StreamBuilder<List<TransactionWithCategory>>(
+                stream: database.getTransactionByDateRepo(widget.selectedDate),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      if (snapshot.data!.length > 0) {
+                        return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Card(
+                                  elevation: 10,
+                                  child: ListTile(
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                            icon: Icon(Icons.delete),
+                                            onPressed: () {}),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TransactionPage(
+                                                          transactionsWithCategory:
+                                                              snapshot.data![
+                                                                  index]),
+                                                ))
+                                                .then((value) {});
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                    subtitle: Text(
+                                        snapshot.data![index].category.name),
+                                    leading: Container(
+                                        padding: EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: (snapshot.data![index].category
+                                                    .type ==
+                                                1)
+                                            ? Icon(
+                                                Icons.download,
+                                                color: Colors.greenAccent[400],
+                                              )
+                                            : Icon(
+                                                Icons.upload,
+                                                color: Colors.red[400],
+                                              )),
+                                    title: Text(
+                                      snapshot.data![index].transaction.amount
+                                          .toString(),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      } else {
+                        return Center(
+                          child: Column(children: [
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text("Belum ada transaksi",
+                                style: GoogleFonts.poppins()),
+                          ]),
+                        );
+                      }
+                    } else {
+                      return Center(
+                        child: Text("Belum ada transaksi"),
+                      );
+                    }
+                  }
+                })
+          ],
+        ),
+      ),
     );
   }
-}
-
-class _SalesData {
-  _SalesData(this.year, this.sales);
-
-  final String year;
-  final double sales;
 }

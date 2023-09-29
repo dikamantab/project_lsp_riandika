@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: TransactionPage(),
+      home: LoginPage(),
       theme: ThemeData(primarySwatch: Colors.orange, fontFamily: 'poppins'),
     );
   }
